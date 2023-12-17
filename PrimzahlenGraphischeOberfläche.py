@@ -89,7 +89,7 @@ result_label2.pack()
 Zerlegungen :str = ""
 
 # Definiere eine Funktion, um zu überprüfen, ob eine Zahl als Summe von zwei Primzahlen dargestellt werden kann
-def MalteIstCool(n):
+def checkSum(n):
     global Zerlegungen
     if n % 2 == 1:
         raise ValueError("n muss eine gerade Zahl sein")
@@ -110,7 +110,7 @@ def MalteIstCool(n):
 def calculateSums():
     n = int(entry3.get())
     try:
-        anzahl = MalteIstCool(n)
+        anzahl = checkSum(n)
         result_label3.config(text=f"Die Zahl {n} lässt sich {anzahl}-mal als Summe von zwei Primzahlen darstellen. \n {Zerlegungen}")
 
     except ValueError as e:
@@ -135,7 +135,7 @@ window.mainloop()
 # Zusätzlicher Code außerhalb des Fensters
 
 # Definiere eine Funktion, um zu überprüfen, ob eine Zahl als Summe von zwei Primzahlen dargestellt werden kann
-def MalteIstCool(n):
+def checkSum(n):
     if n % 2 == 1:
         raise ValueError("n muss eine gerade Zahl sein")
 
@@ -151,7 +151,7 @@ def MalteIstCool(n):
 
 try:
     n = int(input("Geben Sie eine gerade Zahl ein: "))
-    anzahl, output = MalteIstCool(n)
+    anzahl, output = checkSum(n)
     print(f"Die Zahl {n} lässt sich {anzahl}-mal als Summe von zwei Primzahlen darstellen.")
     print(output)
 except ValueError as e:
