@@ -65,7 +65,7 @@ print(f"Die Primzahlen kleiner oder gleich {n} sind: {primeList}")
 # Aufgabe 3
 
 # Diese Funktion ermittelt die Anzahl der Zerlegungen einer geraden Zahl n als Summe von zwei Primzahlen.
-def MalteIstCool(n):
+def Zerlegung(n):
     # Überprüfe, ob n eine gerade Zahl ist.
     if n % 2 == 1:
         raise ValueError("n muss eine gerade Zahl sein")
@@ -81,7 +81,7 @@ def MalteIstCool(n):
 n = int(input("Geben Sie eine gerade Zahl ein: "))
 
 # Ermittle die Anzahl der Zerlegungen von n als Summe von zwei Primzahlen.
-anzahl = MalteIstCool(n)
+anzahl = Zerlegung(n)
 
 # Gib das Ergebnis aus.
 print(f"Die Zahl {n} lässt sich {anzahl}-mal als Summe von zwei Primzahlen darstellen.")
