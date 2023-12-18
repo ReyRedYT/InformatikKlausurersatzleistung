@@ -1,12 +1,11 @@
+# Die Klausurersatzleistung von Arasp, Malte, Nick und Tobias
+
 import math
-import time
 
 # Aufgabe 1
 
 # Diese Funktion überprüft, ob eine gegebene Zahl eine Primzahl ist.
-# Sie nimmt eine Zahl n und einen optionalen Parameter verbose entgegen.
-# Wenn verbose=True ist, werden zusätzliche Informationen ausgegeben.
-def isPrime(n, verbose=False):
+def isPrime(n):
     # Wenn n = 2 ist, wird True zurückgegeben, da 2 eine Primzahl ist.
     if n == 2:
         return True
@@ -24,15 +23,21 @@ def isPrime(n, verbose=False):
         return False
 
     while True:
+        # Wenn i größer als die Wurzel von n ist, ist n eine Primzahl.
         if i > r:
+            # Gib True zurück, wenn n eine Primzahl ist.
             return True
 
+        # Wenn n durch i restlos teilbar ist, ist n keine Primzahl.
         if n % i == 0:
-            if verbose:
-                print(f"{n} ist teilbar durch {i}")
+            # Gib False zurück, wenn n keine Primzahl ist.
             return False
 
+        # Erhöhe i um 2, da alle Primzahlen größer als 2 ungerade sind.
+        # Nachdem i erhöht wurde, wird die Schleife erneut durchlaufen.
+        # Dies wird so lange wiederholt, bis i größer als die Wurzel von n ist.
         i += 2
+        # Es wurde schon geprüft, ob n durch 2 teilbar ist, deshalb kann i um 2 erhöht werden.
 
 # Nutzer-Eingabe
 Eingabe = int(input("Gib eine Zahl ein: "))
@@ -65,16 +70,22 @@ print(f"Die Primzahlen kleiner oder gleich {n} sind: {primeList}")
 # Aufgabe 3
 
 # Diese Funktion ermittelt die Anzahl der Zerlegungen einer geraden Zahl n als Summe von zwei Primzahlen.
+# Goldbachsche Vermutung: Jede gerade Zahl größer als 2 ist die Summe von zwei Primzahlen.
 def Zerlegung(n):
     # Überprüfe, ob n eine gerade Zahl ist.
     if n % 2 == 1:
         raise ValueError("n muss eine gerade Zahl sein")
 
+    # Anzahl der Zerlegungen
     anzahl = 0
+    
+    # Prüfe alle Zahlen zwischen 2 und n.
+    # Wenn sowohl i als auch n-i Primzahlen sind, erhöhe die Anzahl der Zerlegungen um 1.
     for i in range(2, n):
         if isPrime(i):
             if isPrime(n - i):
                 anzahl += 1
+    # Gib die Anzahl der Zerlegungen zurück.
     return anzahl
 
 # Nutzer-Eingabe
@@ -88,6 +99,8 @@ print(f"Die Zahl {n} lässt sich {anzahl}-mal als Summe von zwei Primzahlen dars
 
 # Gib alle Zerlegungen von n als Summe von zwei Primzahlen aus.
 for i in range(2, n):
+    # Wenn sowohl i als auch n-i Primzahlen sind, gib die Zerlegung aus.
     if isPrime(i):
         if isPrime(n - i):
+            # Gib die Zerlegung aus.
             print(f"{i} + {n - i}")
