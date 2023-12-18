@@ -1,62 +1,48 @@
-# Importiere die benötigten Module
+# Die Klausurersatzleistung von Arasp, Malte, Nick und Tobias
+
 import math
 import tkinter as tk
-
+from tkinter import messagebox
 # Aufgabe 1
 
-# Definiere eine Funktion, um zu überprüfen, ob eine Zahl eine Primzahl ist
-def isPrime(n, verbose=False):
+# Diese Funktion überprüft, ob eine gegebene Zahl eine Primzahl ist.
+def isPrime(n):
+    # Wenn n = 2 ist, wird True zurückgegeben, da 2 eine Primzahl ist.
     if n == 2:
         return True
 
+    # Wenn n kleiner als 2 ist oder durch 2 teilbar ist, wird False zurückgegeben.
     if n < 2 or n % 2 == 0:
         return False
 
+    # Prüfe alle Zahlen zwischen 3 und der Wurzel von n.
     i = 3
     r = math.sqrt(n)
 
+    # Wenn die Wurzel eine ganze Zahl ist, ist n keine Primzahl.
     if r % 1 == 0:
         return False
 
     while True:
+        # Wenn i größer als die Wurzel von n ist, ist n eine Primzahl.
         if i > r:
+            # Gib True zurück, wenn n eine Primzahl ist.
             return True
 
+        # Wenn n durch i restlos teilbar ist, ist n keine Primzahl.
         if n % i == 0:
-            if verbose:
-                print(f"{n} ist teilbar durch {i}")
+            # Gib False zurück, wenn n keine Primzahl ist.
             return False
 
+        # Erhöhe i um 2, da alle Primzahlen größer als 2 ungerade sind.
+        # Nachdem i erhöht wurde, wird die Schleife erneut durchlaufen.
+        # Dies wird so lange wiederholt, bis i größer als die Wurzel von n ist.
         i += 2
-
-# Definiere eine Funktion, um die Primzahlüberprüfung auszuführen
-def checkPrime():
-    Eingabe = int(entry.get())
-    if isPrime(Eingabe):
-        result_label.config(text=f"{Eingabe} ist eine Primzahl.")
-    else:
-        result_label.config(text=f"{Eingabe} ist keine Primzahl.")
-
-# Erstelle das Fenster
-window = tk.Tk()
-window.title("Primzahl-Checker")
-
-# Erstelle die Eingabe- und Ausgabe-Widgets
-input_label = tk.Label(window, text="Gib eine Zahl ein:")
-input_label.pack()
-
-entry = tk.Entry(window)
-entry.pack()
-
-check_button = tk.Button(window, text="Überprüfen", command=checkPrime)
-check_button.pack()
-
-result_label = tk.Label(window, text="")
-result_label.pack()
+        # Es wurde schon geprüft, ob n durch 2 teilbar ist, deshalb kann i um 2 erhöht werden.
 
 # Aufgabe 2
 
-# Definiere eine Funktion, um alle Primzahlen bis zu einer gegebenen Zahl zu erhalten
+# Diese Funktion gibt eine Liste aller Primzahlen zurück, die kleiner oder gleich n sind.
 def getPrimes(n):
     primes = []
     for i in range(2, n+1):
@@ -64,95 +50,121 @@ def getPrimes(n):
             primes.append(i)
     return primes
 
-# Definiere eine Funktion, um die Primzahlen anzuzeigen
-def showPrimes():
-    n = int(entry2.get())
-    primeList = getPrimes(n)
-    result_label2.config(text=f"Die Primzahlen kleiner oder gleich {n} sind: {primeList}")
-
-# Erstelle die Eingabe- und Ausgabe-Widgets für Aufgabe 2
-input_label2 = tk.Label(window, text="Geben Sie eine Zahl ein:")
-input_label2.pack()
-
-entry2 = tk.Entry(window)
-entry2.pack()
-
-show_button = tk.Button(window, text="Anzeigen", command=showPrimes)
-show_button.pack()
-
-result_label2 = tk.Label(window, text="")
-result_label2.pack()
-
 # Aufgabe 3
 
-# Definiere eine globale Variable für die Zerlegungen
-Zerlegungen :str = ""
-
-# Definiere eine Funktion, um zu überprüfen, ob eine Zahl als Summe von zwei Primzahlen dargestellt werden kann
-def checkSum(n):
-    global Zerlegungen
+# Diese Funktion ermittelt die Anzahl der Zerlegungen einer geraden Zahl n als Summe von zwei Primzahlen.
+# Goldbachsche Vermutung: Jede gerade Zahl größer als 2 ist die Summe von zwei Primzahlen.
+def Zerlegung(n):
+    # Überprüfe, ob n eine gerade Zahl ist.
     if n % 2 == 1:
-        raise ValueError("n muss eine gerade Zahl sein")
+        messagebox.showerror("Fehler", f"{n} ist keine gerade Zahl.") # Fehlermeldung als Pop-Up
+        raise ValueError(f"{n} ist keine gerade Zahl.") # Fehlermeldung in der Konsole
 
+    # Anzahl der Zerlegungen
     anzahl = 0
-    output = ""
+    
+    # Prüfe alle Zahlen zwischen 2 und n.
+    # Wenn sowohl i als auch n-i Primzahlen sind, erhöhe die Anzahl der Zerlegungen um 1.
     for i in range(2, n):
         if isPrime(i):
             if isPrime(n - i):
                 anzahl += 1
-                output += f"{i} + {n - i}\n"
-                result_label3.config(text=output)
-                print(f"{i} + {n - i}")
-                Zerlegungen += f"{i} + {n - i}\n"
+    # Gib die Anzahl der Zerlegungen zurück.
     return anzahl
 
-# Definiere eine Funktion, um die Summen zu berechnen
-def calculateSums():
+# Für Aufgabe 1
+# Funktion, die beim Klicken des Buttons ausgeführt wird
+def button_click():
+    # Nutzer-Eingabe
+    n = int(entry.get())
+
+    # Überprüfe, ob die eingegebene Zahl eine Primzahl ist.
+    if isPrime(n):
+        result_label.config(text=f"{n} ist eine Primzahl.")
+    else:
+        result_label.config(text=f"{n} ist keine Primzahl.")
+
+# Für Aufgabe 2
+# Funktion, die beim Klicken des Buttons ausgeführt wird
+def button_click2():
+    # Nutzer-Eingabe
+    n = int(entry2.get())
+
+    # Erstelle eine Liste der Primzahlen kleiner oder gleich n.
+    primeList = getPrimes(n)
+
+    # Gib das Ergebnis aus.
+    result_label2.config(text=f"Die Primzahlen kleiner oder gleich {n} sind: {primeList}")
+
+# Für Aufgabe 3
+# Funktion, die beim Klicken des Buttons ausgeführt wird
+def button_click3():
+    # Nutzer-Eingabe
     n = int(entry3.get())
-    try:
-        anzahl = checkSum(n)
-        result_label3.config(text=f"Die Zahl {n} lässt sich {anzahl}-mal als Summe von zwei Primzahlen darstellen. \n {Zerlegungen}")
 
-    except ValueError as e:
-        result_label3.config(text=str(e))
+    # Ermittle die Anzahl der Zerlegungen von n als Summe von zwei Primzahlen.
+    anzahl = Zerlegung(n)
 
-# Erstelle die Eingabe- und Ausgabe-Widgets für Aufgabe 3
-input_label3 = tk.Label(window, text="Geben Sie eine gerade Zahl ein:")
-input_label3.pack()
+    # Gib das Ergebnis aus.
+    result_label3.config(text=f"Die Zahl {n} lässt sich {anzahl}-mal als Summe von zwei Primzahlen darstellen.")
 
-entry3 = tk.Entry(window)
-entry3.pack()
-
-calculate_button = tk.Button(window, text="Berechnen", command=calculateSums)
-calculate_button.pack()
-
-result_label3 = tk.Label(window, text="")
-result_label3.pack()
-
-# Starte die Haupt-Schleife des Fensters
-window.mainloop()
-
-# Zusätzlicher Code außerhalb des Fensters
-
-# Definiere eine Funktion, um zu überprüfen, ob eine Zahl als Summe von zwei Primzahlen dargestellt werden kann
-def checkSum(n):
-    if n % 2 == 1:
-        raise ValueError("n muss eine gerade Zahl sein")
-
-    anzahl = 0
-    output = ""
+    # Gib alle Zerlegungen von n als Summe von zwei Primzahlen aus.
     for i in range(2, n):
+        # Wenn sowohl i als auch n-i Primzahlen sind, gib die Zerlegung aus.
         if isPrime(i):
             if isPrime(n - i):
-                anzahl += 1
-                output += f"{i} + {n - i}\n"
-                result_label3.config(text=output)
-    return anzahl, output
+                # Gib die Zerlegung aus.
+                result_label3.config(text=result_label3.cget("text") + f"\n{i} + {n - i}")
 
-try:
-    n = int(input("Geben Sie eine gerade Zahl ein: "))
-    anzahl, output = checkSum(n)
-    print(f"Die Zahl {n} lässt sich {anzahl}-mal als Summe von zwei Primzahlen darstellen.")
-    print(output)
-except ValueError as e:
-    print(str(e))
+# Erstelle das Hauptfenster
+window = tk.Tk()
+window.title("Primzahl-Checker")
+window.geometry("800x600")
+
+# Erstelle ein Label und ein Entry für die Nutzer-Eingabe
+label = tk.Label(window, text="Gib eine Zahl ein:") # Erstelle ein Label
+label.pack() # Packe das Label in das Fenster
+entry = tk.Entry(window) # Erstelle ein Entry
+entry.pack() # Packe das Entry in das Fenster
+
+# Erstelle einen Button, der die Funktion button_click ausführt
+button = tk.Button(window, text="Überprüfen", command=button_click) # Erstelle einen Button
+button.pack() # Packe den Button in das Fenster
+
+# Erstelle ein Label für das Ergebnis
+result_label = tk.Label(window, text="") # Erstelle ein Label
+result_label.pack() # Packe das Label in das Fenster
+
+# Erstelle ein Label und ein Entry für die Nutzer-Eingabe
+label2 = tk.Label(window, text="Geben Sie eine Zahl ein:") # Erstelle ein Label
+label2.pack()   # Packe das Label in das Fenster
+entry2 = tk.Entry(window) # Erstelle ein Entry
+entry2.pack() # Packe das Entry in das Fenster
+
+# Erstelle einen Button, der die Funktion button_click2 ausführt
+button2 = tk.Button(window, text="Primzahlen anzeigen", command=button_click2) # Erstelle einen Button
+button2.pack() # Packe den Button in das Fenster
+
+# Erstelle ein Label für das Ergebnis
+result_label2 = tk.Label(window, text="") # Erstelle ein Label
+result_label2.pack() # Packe das Label in das Fenster
+
+# Erstelle ein Label und ein Entry für die Nutzer-Eingabe
+label3 = tk.Label(window, text="Geben Sie eine gerade Zahl ein:") # Erstelle ein Label
+label3.pack() # Packe das Label in das Fenster
+entry3 = tk.Entry(window) # Erstelle ein Entry
+entry3.pack() # Packe das Entry in das Fenster
+
+# Erstelle einen Button, der die Funktion button_click3 ausführt
+button3 = tk.Button(window, text="Zerlegungen anzeigen", command=button_click3) # Erstelle einen Button
+button3.pack() # Packe den Button in das Fenster
+
+# Erstelle ein Label für das Ergebnis
+result_label3 = tk.Label(window, text="") # Erstelle ein Label
+result_label3.pack() # Packe das Label in das Fenster
+
+# Starte die Hauptloop des Fensters
+# Hält das Fenster offen bis es geschlossen wird
+window.mainloop()
+
+
